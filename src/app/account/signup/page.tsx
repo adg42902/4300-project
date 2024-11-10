@@ -15,6 +15,9 @@ export default function Signup() {
 
   const signupDisabled = isLoading || !formData.username || !formData.password;
 
+  let username: string = "";
+  let password: string = "";
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -28,13 +31,14 @@ export default function Signup() {
     e.preventDefault();
     // Implement Database logic here with post to create new user
     // Dummy data for now
-
+    username = formData.username;
+    password = formData.password;
     // Assuming the dummy data is for demonstration purposes and actual database logic will be implemented
     // For demonstration, let's assume the signup is successful
-    setButtonText("Sign Up Success");
+    setButtonText("Sign Up Successful");
     // Route to dashboard view when implemented
-    // router.push("/dashboard");
-    // router.refresh();
+    router.push("/dashboard");
+    router.refresh();
   };
 
   return (
@@ -54,7 +58,7 @@ export default function Signup() {
               Create Username
             </label>
             <input
-              className="p-1 border rounded-md transition bg-gray-200 duration-200 ease-in-out focus:bg-white"
+              className="text-black p-1 border rounded-md transition bg-gray-200 duration-200 ease-in-out focus:bg-white"
               type="text"
               placeholder="username"
               id="username"
@@ -66,7 +70,7 @@ export default function Signup() {
               Create Password
             </label>
             <input
-              className="p-1 border rounded-md transition bg-gray-200 duration-200 ease-in-out focus:bg-white"
+              className="text-black p-1 border rounded-md transition bg-gray-200 duration-200 ease-in-out focus:bg-white"
               type="password"
               placeholder="password"
               id="password"
@@ -89,7 +93,9 @@ export default function Signup() {
             >
               {buttonText}
             </button>
-            <p className="text-sm text-gray-600 italic">Password must be 8 characters or longer</p>
+            <p className="text-sm text-gray-600 italic">
+              Password must be 8 characters or longer
+            </p>
           </div>
         </form>
       </div>

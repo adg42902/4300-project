@@ -15,8 +15,7 @@ export default function Login() {
   const [buttonText, setButtonText] = useState("Login");
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
-  const loginDisabled = isLoading || !formData.username || !formData.password;
+  const [loginDisabled, setLoginDisabled] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -28,22 +27,24 @@ export default function Login() {
   const handleSubmit = (e: React.FormEvent) => {
     setButtonText("Logging in...");
     setLoading(true);
+    setLoginDisabled(true);
     e.preventDefault();
     // Implement Database logic here with get to check username/password
     // Dummy data for now
-
+    
     if (
       formData.username === dummyUsername &&
       formData.password === dummyPassword
     ) {
-      /* Route to dashboard view when implemented
+      // Route to dashboard view when implemented
+        setButtonText("Login Success");
         router.push("/dashboard");
         router.refresh();
-        */
-      setButtonText("Login Success");
+      
     } else {
       setError("Incorrect username or password");
       setButtonText("Login");
+      setLoginDisabled(false);
     }
   };
 
@@ -64,7 +65,7 @@ export default function Login() {
               Login
             </label>
             <input
-              className="p-1 border rounded-md transition bg-gray-200 duration-200 ease-in-out focus:bg-white"
+              className="text-black p-1 border rounded-md transition bg-gray-200 duration-200 ease-in-out focus:bg-white"
               type="text"
               placeholder="username"
               id="username"
@@ -76,7 +77,7 @@ export default function Login() {
               Password
             </label>
             <input
-              className="p-1 border rounded-md transition bg-gray-200 duration-200 ease-in-out focus:bg-white"
+              className="text-black p-1 border rounded-md transition bg-gray-200 duration-200 ease-in-out focus:bg-white"
               type="password"
               placeholder="password"
               id="password"
