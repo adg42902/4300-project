@@ -1,5 +1,6 @@
 //View of top tracks/genres/artists
 import Logout from "../components/Logout";
+import Tracks from "../components/Tracks";
 
 export default function Dashboard() {
   return (
@@ -8,6 +9,7 @@ export default function Dashboard() {
       <div className="absolute right-4">
         <Logout />
       </div>
+      <Tracks />
     </div>
   );
 }

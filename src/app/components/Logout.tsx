@@ -23,5 +23,5 @@ export default function Logout() {
     }
   };
 
-  return <button onClick={handleLogout} className="px-3 py-2 bg-gray-600 rounded-lg transition ease-in-out duration-200 hover:scale-105 hover:bg-gray-700 hover:shadow-md">Log Out</button>;
+  return <button onClick={handleLogout} className="px-3 py-2 text-white bg-gray-600 rounded-lg transition ease-in-out duration-200 hover:scale-105 hover:bg-gray-700 hover:shadow-md">Log Out</button>;
 }
