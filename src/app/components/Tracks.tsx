@@ -6,7 +6,8 @@ export default function Tracks() {
     {
       title: "Smells Like Teen Spirit",
       artist: "Nirvana",
-      imageUrl: "https://i.scdn.co/image/ab67616d0000b273fdf71af87c2a4f3cbed53d65"
+      imageUrl:
+        "https://i.scdn.co/image/ab67616d0000b273fdf71af87c2a4f3cbed53d65",
     },
     {
       title: "Stairway to Heaven",
@@ -31,14 +32,13 @@ export default function Tracks() {
   return (
     <div className="w-full">
       {dummyTrackData.map((track, index) => (
-        <div className=" ">
-          <Card
-            number={index + 1}
-            title={track.title}
-            artist={track.artist}
-            imageUrl={track.imageUrl}
-          />
-        </div>
+        <Card
+          number={index + 1}
+          title={track.title}
+          artist={track.artist}
+          imageUrl={track.imageUrl}
+          key={track.title}
+        />
       ))}
     </div>
   );
