@@ -31,13 +31,14 @@ export default function Login() {
     e.preventDefault();
     // Implement Database logic here with get to check username/password
     // Dummy data for now
-    
+
     if (
       formData.username === dummyUsername &&
       formData.password === dummyPassword
     ) {
       // Route to dashboard view when implemented
         setButtonText("Login Success");
+        localStorage.setItem("isLoggedIn", "true")
         router.push("/dashboard");
         router.refresh();
       

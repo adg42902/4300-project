@@ -16,6 +16,8 @@ export default function Dashboard() {
 
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
 
+  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
   const handleClick = () => {
     router.push("/create-playlist");
     router.refresh();
@@ -36,9 +38,22 @@ export default function Dashboard() {
     }
   };
 
+  const checkLogin = () => {
+    if (!isLoggedIn) {
+      router.push("/account/login")
+      router.refresh();
+    }
+  }
+
   useEffect(() => {
     getPlaylists();
   }, []);
+
+  useEffect(() => {
+    checkLogin();
+  }, [])
+
+
 
   return (
     <div className="relative flex flex-col items-center w-full h-screen mt-4">

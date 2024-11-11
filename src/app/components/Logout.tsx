@@ -14,6 +14,7 @@ export default function Logout() {
         });
 
         if (response.ok) {
+          localStorage.clear();
           router.push("/account/login");
           router.refresh();
         }
