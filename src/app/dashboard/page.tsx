@@ -18,11 +18,6 @@ export default function Dashboard() {
 
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
-  const handleClick = () => {
-    router.push("/create-playlist");
-    router.refresh();
-  };
-
   const getPlaylists = async () => {
     try {
       const response = await fetch("/api/playlists", { method: "GET" });
@@ -54,7 +49,6 @@ export default function Dashboard() {
   }, [])
 
 
-
   return (
     <div className="relative flex flex-col items-center w-full h-screen mt-4">
       <h1 className="text-2xl font-bold text-center w-full mt-1">Dashboard</h1>
@@ -74,12 +68,11 @@ export default function Dashboard() {
           </div>
         ))}
       </div>
-      <button
-        onClick={handleClick}
+      <Link href="/create-playlist"
         className="border rounded-lg py-1 px-4 bg-green-400 border-green-400 transition ease-in-out duration-200 hover:bg-green-500 hover:scale-105 hover:shadow-md disabled:bg-gray-300 disabled:border-gray-300 disabled:hover:scale-100 disabled:opacity-50 disabled:hover:shadow-none"
       >
         Create Playlist
-      </button>
+      </Link>
     </div>
   );
 }

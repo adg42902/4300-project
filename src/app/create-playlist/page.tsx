@@ -84,7 +84,7 @@ export default function CreatePlaylist() {
         </div>
         <button
           type="submit"
-          className="w-full py-2 px-4 bg-green-500 text-white rounded hover:bg-green-600 transition duration-200"
+          className="w-full py-2 px-4 bg-green-500 text-black rounded hover:bg-green-600 transition duration-200"
         >
           Create New Playlist
         </button>
