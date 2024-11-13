@@ -5,6 +5,7 @@ import Tracks from "../components/Tracks";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import SpotifyConnect from "../components/SpotifyConnect";
 
 type Playlist = {
   title: string;
@@ -15,8 +16,6 @@ export default function Dashboard() {
   const router = useRouter();
 
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
-
-  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
   const getPlaylists = async () => {
     try {
@@ -33,20 +32,13 @@ export default function Dashboard() {
     }
   };
 
-  const checkLogin = () => {
-    if (!isLoggedIn) {
-      router.push("/account/login")
-      router.refresh();
-    }
-  }
+  
 
   useEffect(() => {
     getPlaylists();
   }, []);
 
-  useEffect(() => {
-    checkLogin();
-  }, [])
+  
 
 
   return (
@@ -73,6 +65,7 @@ export default function Dashboard() {
       >
         Create Playlist
       </Link>
+      <SpotifyConnect />
     </div>
   );
 }

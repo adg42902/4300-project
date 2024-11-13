@@ -4,9 +4,6 @@ import { useState } from "react";
 import React from "react";
 
 export default function Login() {
-  const dummyUsername = "test";
-  const dummyPassword = "password";
-
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
