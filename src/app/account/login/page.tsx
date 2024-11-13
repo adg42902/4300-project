@@ -9,7 +9,7 @@ export default function Login() {
 
   const router = useRouter();
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
   const [buttonText, setButtonText] = useState("Login");
@@ -24,26 +24,38 @@ export default function Login() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setButtonText("Logging in...");
     setLoading(true);
     setLoginDisabled(true);
-    e.preventDefault();
-    // Implement Database logic here with get to check username/password
-    // Dummy data for now
 
-    if (
-      formData.username === dummyUsername &&
-      formData.password === dummyPassword
-    ) {
-      // Route to dashboard view when implemented
+    try {
+      const response = await fetch("/api/auth/account/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
         setButtonText("Login Success");
-        localStorage.setItem("isLoggedIn", "true")
+        localStorage.setItem("isLoggedIn", "true");
         router.push("/dashboard");
         router.refresh();
-      
-    } else {
-      setError("Incorrect username or password");
+      } else {
+        setError(data.message || "Login failed");
+        setButtonText("Login");
+        setLoginDisabled(false);
+      }
+    } catch (error) {
+      setError("An error occurred. Please try again.");
       setButtonText("Login");
       setLoginDisabled(false);
     }
@@ -67,10 +79,10 @@ export default function Login() {
             </label>
             <input
               className="text-black p-1 border rounded-md transition bg-gray-200 duration-200 ease-in-out focus:bg-white"
-              type="text"
-              placeholder="username"
-              id="username"
-              value={formData.username}
+              type="email"
+              placeholder="email"
+              id="email"
+              value={formData.email}
               onChange={handleChange}
               required
             ></input>
