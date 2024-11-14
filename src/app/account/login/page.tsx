@@ -71,7 +71,7 @@ export default function Login() {
           className="flex flex-col space-y-4 w-full max-w-md pd-8"
         >
           <div className="grid grid-cols-2 gap-4">
-            <label className="text-right p-1" htmlFor="username">
+            <label className="text-right p-1" htmlFor="email">
               Login
             </label>
             <input
