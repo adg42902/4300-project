@@ -1,7 +1,16 @@
+'use client'
+
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
+  useEffect(() => {
+    if (localStorage.getItem("connectedToSpotify") === null) {
+      localStorage.setItem("connectedToSpotify", "false");
+    }
+  }, []); 
+
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center">

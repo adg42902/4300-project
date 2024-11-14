@@ -1,7 +1,12 @@
 import React from "react";
 
-export default function SpotifyConnect() {
+interface Props {
+    handleSpotifyConnectBtn: () => void;
+}
+
+export default function SpotifyConnect({ handleSpotifyConnectBtn }: Props) {
   const handleConnect = () => {
+    handleSpotifyConnectBtn();
     window.location.href = "/api/auth/spotify";
   };
 

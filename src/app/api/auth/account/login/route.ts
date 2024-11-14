@@ -3,6 +3,8 @@ import Account from "@/models/Account";
 import connectMongoDB from "@/libs/db";
 import { NextRequest, NextResponse } from "next/server";
 
+const JWT_SECRET = process.env.JWT_SECRET || "";
+
 export async function POST(req: NextRequest) {
   const { email, password } = await req.json();
   await connectMongoDB();
@@ -16,7 +18,10 @@ export async function POST(req: NextRequest) {
   if (!isPasswordValid) {
     return NextResponse.json({ message: "Invalid password" }, { status: 401 });
   }
+
+
+
   const response = NextResponse.json({ message: "Login successful" });
-  response.cookies.set("isLoggedIn", "true", { httpOnly: true });
+
   return response;
 }

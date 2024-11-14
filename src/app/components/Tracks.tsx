@@ -1,44 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "./Card";
 
+type Track = {
+  id: string;
+  name: string;
+  artists: { name: string }[];
+  album: {
+    images: { url: string }[];
+  };
+};
+
 export default function Tracks() {
-  const dummyTrackData = [
-    {
-      title: "Smells Like Teen Spirit",
-      artist: "Nirvana",
-      imageUrl:
-        "https://i.scdn.co/image/ab67616d0000b273fdf71af87c2a4f3cbed53d65",
-    },
-    {
-      title: "Stairway to Heaven",
-      artist: "Led Zeppelin",
-      imageUrl:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSogdPcrirVwAy0unQVpiKZLE4Kj9F6nrprYw&s",
-    },
-    {
-      title: "Creep",
-      artist: "Radiohead",
-      imageUrl:
-        "https://i.scdn.co/image/ab67616d0000b2738ec9b518c37636bac3ed0a8c",
-    },
-    {
-      title: "All Along the Watchtower",
-      artist: "Jimi Hendrix",
-      imageUrl:
-        "https://i.scdn.co/image/ab67616d0000b273aa10736c701fdab05d60f64c",
-    },
-  ];
+  const [tracks, setTracks] = useState<Track[]>([]);
+  const [tracksLoaded, setTracksLoaded] = useState(false);
+
+  const fetchUserTracks = async () => {
+    const response = await fetch("/api/spotifyStats/tracks", {
+      method: "GET",
+    });
+    const tracks = await response.json();
+    setTracks(tracks);
+  };
+
+  useEffect(() => {
+    fetchUserTracks();
+  }, []);
 
   return (
-    <div className="w-full">
-      {dummyTrackData.map((track, index) => (
+    <div className="flex flex-wrap justify-center gap-4">
+      {tracks.map((track, index) => (
+        <div className="mx-2"key={track.id}>
         <Card
           number={index + 1}
-          title={track.title}
-          artist={track.artist}
-          imageUrl={track.imageUrl}
-          key={track.title}
+          title={track.name}
+          artist={track.artists.map((artist) => artist.name).join(", ")}
+          imageUrl={track.album.images[0]?.url || ""}
+          
         />
+        </div>
       ))}
     </div>
   );

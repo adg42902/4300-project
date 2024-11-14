@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import SpotifyConnect from "../components/SpotifyConnect";
+import local from "next/font/local";
 
 type Playlist = {
   title: string;
@@ -16,6 +17,16 @@ export default function Dashboard() {
   const router = useRouter();
 
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
+  const [isConnected, setIsConnected] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const connectedToSpotify = localStorage.getItem("connectedToSpotify");
+      if (connectedToSpotify === "true") {
+        setIsConnected(true);
+      }
+    }
+  }, []);
 
   const getPlaylists = async () => {
     try {
@@ -32,13 +43,14 @@ export default function Dashboard() {
     }
   };
 
-  
+ 
+  const handleSpotifyConnectBtn = () => {
+    localStorage.setItem("connectedToSpotify", "true");
+  }
 
   useEffect(() => {
     getPlaylists();
   }, []);
-
-  
 
 
   return (
@@ -47,25 +59,13 @@ export default function Dashboard() {
       <div className="absolute right-4">
         <Logout />
       </div>
-      {/*<Tracks />*/}
-      <div className="flex flex-col">
-        {playlists.map((playlist, index) => (
-          <div
-            className="flex items-center justify-evenly"
-            key={playlist.title}
-          >
-            <h2>
-              {index + 1}. {playlist.title} - {playlist.criteria}
-            </h2>
-          </div>
-        ))}
-      </div>
+      {isConnected && <Tracks />}
       <Link href="/create-playlist"
         className="border rounded-lg py-1 px-4 bg-green-400 border-green-400 transition ease-in-out duration-200 hover:bg-green-500 hover:scale-105 hover:shadow-md disabled:bg-gray-300 disabled:border-gray-300 disabled:hover:scale-100 disabled:opacity-50 disabled:hover:shadow-none"
       >
         Create Playlist
       </Link>
-      <SpotifyConnect />
+      {!isConnected && <SpotifyConnect handleSpotifyConnectBtn={handleSpotifyConnectBtn} />}
     </div>
   );
 }
