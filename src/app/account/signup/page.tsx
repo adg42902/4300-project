@@ -6,17 +6,14 @@ import React from "react";
 export default function Signup() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
   const [buttonText, setButtonText] = useState("Sign Up");
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const signupDisabled = isLoading || !formData.username || !formData.password;
-
-  let username: string = "";
-  let password: string = "";
+  const signupDisabled = isLoading || !formData.email || !formData.password;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -25,20 +22,38 @@ export default function Signup() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     setButtonText("Signing up...");
     setLoading(true);
     e.preventDefault();
     // Implement Database logic here with post to create new user
     // Dummy data for now
-    username = formData.username;
-    password = formData.password;
-    // Assuming the dummy data is for demonstration purposes and actual database logic will be implemented
-    // For demonstration, let's assume the signup is successful
-    setButtonText("Sign Up Successful");
-    // Route to dashboard view when implemented
-    router.push("/dashboard");
-    router.refresh();
+
+    try {
+      const response = await fetch("/api/auth/account/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        setButtonText("Sign Up Successful");
+        setLoading(false);
+        localStorage.setItem("isLoggedIn", "true");
+        router.push("/dashboard");
+        router.refresh();
+      } else {
+        setError(data.message || "Sign up failed.");
+      }
+    } catch (error) {
+      setError("Sign Up failed");
+    }
   };
 
   return (
@@ -54,15 +69,15 @@ export default function Signup() {
           className="flex flex-col space-y-4 w-full max-w-md pd-8"
         >
           <div className="grid grid-cols-2 gap-4">
-            <label className="text-right p-1" htmlFor="username">
+            <label className="text-right p-1" htmlFor="email">
               Create Username
             </label>
             <input
               className="text-black p-1 border rounded-md transition bg-gray-200 duration-200 ease-in-out focus:bg-white"
-              type="text"
-              placeholder="username"
-              id="username"
-              value={formData.username}
+              type="email"
+              placeholder="email"
+              id="email"
+              value={formData.email}
               onChange={handleChange}
               required
             ></input>
