@@ -5,7 +5,7 @@ interface CardProps {
     number: number;
     imageUrl: string;
     title: string;
-    artist: string;
+    artist?: string;
 }
 
 export default function Card(props: CardProps) {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Card from "./Card";
+import Card from "../Card";
+import { set } from "mongoose";
 
 type Track = {
   id: string;
@@ -20,6 +21,7 @@ export default function Tracks() {
     });
     const tracks = await response.json();
     setTracks(tracks);
+    setTracksLoaded(true);
   };
 
   useEffect(() => {
@@ -29,14 +31,13 @@ export default function Tracks() {
   return (
     <div className="flex flex-wrap justify-center gap-4">
       {tracks.map((track, index) => (
-        <div className="mx-2"key={track.id}>
-        <Card
-          number={index + 1}
-          title={track.name}
-          artist={track.artists.map((artist) => artist.name).join(", ")}
-          imageUrl={track.album.images[0]?.url || ""}
-          
-        />
+        <div className="mx-2" key={track.id}>
+          <Card
+            number={index + 1}
+            title={track.name}
+            artist={track.artists.map((artist) => artist.name).join(", ")}
+            imageUrl={track.album.images[0]?.url || ""}
+          />
         </div>
       ))}
     </div>

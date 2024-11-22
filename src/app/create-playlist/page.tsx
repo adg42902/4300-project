@@ -20,7 +20,7 @@ export default function CreatePlaylist() {
   };
 
   const handlePlaylistSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault(); 
 
     const response = await fetch("/api/playlists", {
       method: "POST",

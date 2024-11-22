@@ -43,7 +43,7 @@ export default function Login() {
 
       if (response.ok) {
         setButtonText("Login Success");
-        localStorage.setItem("isLoggedIn", "true");
+        sessionStorage.setItem("isLoggedIn", "true");
         router.push("/dashboard");
         router.refresh();
       } else {
