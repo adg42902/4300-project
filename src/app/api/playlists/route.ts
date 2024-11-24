@@ -1,33 +1,38 @@
-import { NextResponse, NextRequest } from "next/server";
+import Playlist from "@/models/Playlist";
+import connectMongoDB from "@/libs/db";
+import { NextRequest, NextResponse } from "next/server";
 
-let playlists = [
-    {
-      title: "Playlist 1",
-      criteria: "tracks"
-    },
-    {
-      title: "Playlist 2",
-      criteria: "genres"
-    },
-    {
-      title: "Playlist 3",
-      criteria: "artists"
-    }
-  ]
+export async function POST(req: NextRequest) {
+  try {
+    const { name, title, songs } = await req.json();
+    await connectMongoDB();
 
-  export async function GET() {
-    return NextResponse.json(playlists)
+    const newPlaylist = new Playlist({
+      name: name,
+      title: title,
+      songs: songs,
+    });
+    await newPlaylist.save();
+
+    return NextResponse.json({ message: "Playlist created" });
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Invalid JSON or other error" },
+      { status: 400 }
+    );
   }
+}
 
-  export async function POST(req: NextRequest) {
-    try {
-        const {title, criteria} = await req.json()
+export async function GET() {
+  try {
+    await connectMongoDB();
+    const playlists = await Playlist.find({}); 
 
-        const newPlaylist = {title, criteria};
-        playlists.push(newPlaylist)
-
-        return NextResponse.json({message : 'Playlist Successfully Added'})
-    } catch (error: any) {
-        return NextResponse.json({message: "Error Creating Playlist", error: error.message}, {status: 500})
-    }
+    return NextResponse.json({ playlists });
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Error fetching playlists" },
+      { status: 500 }
+    );
   }
+}
