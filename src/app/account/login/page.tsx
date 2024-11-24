@@ -1,4 +1,5 @@
 "use client";
+
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import React from "react";
@@ -59,8 +60,19 @@ export default function Login() {
   };
 
   return (
-    <>
-      <div className="min-h-screen flex items-center justify-center">
+    <div className="relative min-h-screen flex items-center justify-center">
+      {/* Background Video */}
+      <video
+        className="absolute top-0 left-0 w-full h-full object-cover"
+        src="/background.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+      ></video>
+
+      {/* Overlay Content */}
+      <div className="relative z-10 text-center text-white p-4">
         <h1 className="text-center text-3xl font-bold my-8">
           Spotify
           <br /> Stats
@@ -68,11 +80,11 @@ export default function Login() {
 
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col space-y-4 w-full max-w-md pd-8"
+          className="flex flex-col space-y-4 w-full max-w-md p-8 bg-black bg-opacity-50 rounded-lg shadow-lg"
         >
           <div className="grid grid-cols-2 gap-4">
             <label className="text-right p-1" htmlFor="email">
-              Login
+              Email
             </label>
             <input
               className="text-black p-1 border rounded-md transition bg-gray-200 duration-200 ease-in-out focus:bg-white"
@@ -82,7 +94,7 @@ export default function Login() {
               value={formData.email}
               onChange={handleChange}
               required
-            ></input>
+            />
             <label className="text-right p-1" htmlFor="password">
               Password
             </label>
@@ -94,7 +106,7 @@ export default function Login() {
               value={formData.password}
               onChange={handleChange}
               required
-            ></input>
+            />
           </div>
           <div className="flex items-center justify-center">
             <button
@@ -105,8 +117,9 @@ export default function Login() {
               {buttonText}
             </button>
           </div>
+          {error && <p className="text-red-500 text-center mt-4">{error}</p>}
         </form>
       </div>
-    </>
+    </div>
   );
 }

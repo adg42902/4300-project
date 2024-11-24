@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useEffect } from "react";
 import Image from "next/image";
@@ -9,11 +9,22 @@ export default function Home() {
     if (localStorage.getItem("connectedToSpotify") === null) {
       localStorage.setItem("connectedToSpotify", "false");
     }
-  }, []); 
+  }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center">
+    <div className="relative min-h-screen flex items-center justify-center">
+      {/* Background Video */}
+      <video
+        className="absolute top-0 left-0 w-full h-full object-cover"
+        src="/background.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+      ></video>
+
+      {/* Overlay Content */}
+      <div className="relative z-10 text-center text-white">
         <h1 className="text-4xl font-bold mb-8">Welcome to Spotify Stats</h1>
         <Link
           href="/account/login"
