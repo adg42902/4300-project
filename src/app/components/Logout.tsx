@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Cookies from "js-cookie";
 
 export default function Logout() {
   const handleLogout = async () => {
@@ -12,7 +13,7 @@ export default function Logout() {
         });
 
         if (response.ok) {
-          localStorage.clear();
+          Cookies.remove("connectedToSpotify"); 
         }
       } catch (error) {
         console.error("Logout failed: ", error);

@@ -12,7 +12,7 @@ export default function SpotifyConnect({ handleSpotifyConnectBtn }: Props) {
 
   return (
     <div>
-      <button onClick={handleConnect}>Connect Spotify</button>
+      <button className="w-full py-2 px-4 bg-green-500 text-black rounded hover:bg-green-600 transition duration-200" onClick={handleConnect}>Connect Spotify</button>
     </div>
   );
 }

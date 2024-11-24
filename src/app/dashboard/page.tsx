@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import SpotifyConnect from "../components/SpotifyConnect";
 import local from "next/font/local";
 import UserStats from "../components/UserStats";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 
 type Playlist = {
   title: string;
@@ -45,27 +45,15 @@ export default function Dashboard() {
     }
   };
 
- 
   const handleSpotifyConnectBtn = () => {
-    Cookies.set("connectedToSpotify", "true", { expires: 1 / 24 }); // 1/24 = 1 hour
+    Cookies.set("connectedToSpotify", "true", { expires: 1 / 24 }); 
   };
-  
-  const checkSpotifyConnection = () => {
-    const connected = Cookies.get("connectedToSpotify");
-    if (connected === "true") {
-      console.log("Connected to Spotify.");
-    } else {
-      console.log("Not connected to Spotify.");
-    }
-  };
-  
 
   useEffect(() => {
     getPlaylists();
     const connected = Cookies.get("connectedToSpotify") === "true";
     setIsConnected(connected);
   }, []);
-
 
   return (
     <div className="relative flex flex-col items-center w-full h-screen mt-4">
@@ -74,12 +62,17 @@ export default function Dashboard() {
         <Logout />
       </div>
       {isConnected && <UserStats />}
-      <Link href="/create-playlist"
-        className="border rounded-lg py-1 px-4 bg-green-400 border-green-400 transition ease-in-out duration-200 hover:bg-green-500 hover:scale-105 hover:shadow-md disabled:bg-gray-300 disabled:border-gray-300 disabled:hover:scale-100 disabled:opacity-50 disabled:hover:shadow-none"
-      >
-        Create Playlist
-      </Link>
-      {!isConnected && <SpotifyConnect handleSpotifyConnectBtn={handleSpotifyConnectBtn} />}
+      <div className="mb-2">
+        <Link
+          href="/create-playlist"
+          className="border rounded-lg py-1 px-4 bg-green-400 border-green-400 transition ease-in-out duration-200 hover:bg-green-500 hover:scale-105 hover:shadow-md disabled:bg-gray-300 disabled:border-gray-300 disabled:hover:scale-100 disabled:opacity-50 disabled:hover:shadow-none"
+        >
+          Create Playlist
+        </Link>
+        {!isConnected && (
+          <SpotifyConnect handleSpotifyConnectBtn={handleSpotifyConnectBtn} />
+        )}
+      </div>
     </div>
   );
 }
