@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Tracks from "./usersSpotifyStats/Tracks";
 import Artists from "./usersSpotifyStats/Artists";
 import Genres from "./usersSpotifyStats/Genres";
+import Playlists from "./usersSpotifyStats/Playlists";
 
 const UserStats = () => {
   const [activeTab, setActiveTab] = useState(1); 
@@ -37,6 +38,14 @@ const UserStats = () => {
         >
           Genres
         </button>
+        <button
+          onClick={() => handleTabClick(4)}
+          className={`${
+            activeTab === 4 ? "bg-green-400" : "bg-gray-200"
+          } border rounded-lg py-1 px-4 transition ease-in-out duration-200 hover:bg-green-500 hover:scale-105 hover:shadow-md`}
+        >
+          Peoples Playlists
+        </button>
       </div>
 
       <div className="tab-content mt-4 mb-4">
@@ -60,6 +69,13 @@ const UserStats = () => {
           } transition-all duration-300`}
         >
           <Genres />
+        </div>
+        <div
+          className={`${
+            activeTab === 4 ? "block" : "hidden"
+          } transition-all duration-300`}
+        >
+          <Playlists />
         </div>
       </div>
     </div>
