@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import Cookies from "js-cookie";
 
 const SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token";
 
@@ -40,6 +41,7 @@ export async function GET(req: Request) {
         path: '/',
         maxAge: 60 * 60,
     });
+    
 
     return response;
   } else {

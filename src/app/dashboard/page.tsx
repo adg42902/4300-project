@@ -30,27 +30,11 @@ export default function Dashboard() {
     }
   }, []);
 
-  const getPlaylists = async () => {
-    try {
-      const response = await fetch("/api/playlists", { method: "GET" });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch playlists");
-      }
-
-      const data = await response.json();
-      setPlaylists(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const handleSpotifyConnectBtn = () => {
     Cookies.set("connectedToSpotify", "true", { expires: 1 / 24 }); 
   };
 
   useEffect(() => {
-    getPlaylists();
     const connected = Cookies.get("connectedToSpotify") === "true";
     setIsConnected(connected);
   }, []);
