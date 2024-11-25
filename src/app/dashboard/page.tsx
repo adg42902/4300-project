@@ -31,7 +31,7 @@ export default function Dashboard() {
   }, []);
 
   const handleSpotifyConnectBtn = () => {
-    Cookies.set("connectedToSpotify", "true", { expires: 1 / 24 }); 
+    Cookies.set("connectedToSpotify", "true", { expires: 1 / 24, path: "/" });
   };
 
   useEffect(() => {
@@ -47,12 +47,14 @@ export default function Dashboard() {
       </div>
       {isConnected && <UserStats />}
       <div className="mb-2">
-        {isConnected && <Link
-          href="/create-playlist"
-          className="border rounded-lg py-1 px-4 bg-green-400 border-green-400 transition ease-in-out duration-200 hover:bg-green-500 hover:scale-105 hover:shadow-md disabled:bg-gray-300 disabled:border-gray-300 disabled:hover:scale-100 disabled:opacity-50 disabled:hover:shadow-none"
-        >
-          Create Playlist
-        </Link> }
+        {isConnected && (
+          <Link
+            href="/create-playlist"
+            className="border rounded-lg py-1 px-4 bg-green-400 border-green-400 transition ease-in-out duration-200 hover:bg-green-500 hover:scale-105 hover:shadow-md disabled:bg-gray-300 disabled:border-gray-300 disabled:hover:scale-100 disabled:opacity-50 disabled:hover:shadow-none"
+          >
+            Create Playlist
+          </Link>
+        )}
         {!isConnected && (
           <SpotifyConnect handleSpotifyConnectBtn={handleSpotifyConnectBtn} />
         )}
