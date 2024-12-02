@@ -9,11 +9,17 @@ export async function POST(req: NextRequest) {
     await connectMongoDB();
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newAccount = new Account({ email, password: hashedPassword });
+
+    const newAccount = new Account({
+      email,
+      password: hashedPassword,
+    });
+
     await newAccount.save();
 
     return NextResponse.json({ message: "Account created" });
   } catch (error) {
+    console.error("Error creating account:", error);
     return NextResponse.json(
       { message: "Invalid JSON or other error" },
       { status: 400 }

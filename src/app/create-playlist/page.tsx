@@ -3,12 +3,6 @@
 import React, { use, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-type Playlist = {
-  name: string
-  title : string,
-  songs: string[]
-
-}
 
 export default function CreatePlaylist() {
   const router = useRouter();

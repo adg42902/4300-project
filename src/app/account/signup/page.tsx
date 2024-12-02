@@ -81,7 +81,7 @@ export default function Signup() {
         >
           <div className="grid grid-cols-2 gap-4">
             <label className="text-right p-1" htmlFor="email">
-              Create Username
+              Email
             </label>
             <input
               className="text-black p-1 border rounded-md transition bg-gray-200 duration-200 ease-in-out focus:bg-white"

@@ -3,9 +3,10 @@ import Tracks from "./usersSpotifyStats/Tracks";
 import Artists from "./usersSpotifyStats/Artists";
 import Genres from "./usersSpotifyStats/Genres";
 import Playlists from "./usersSpotifyStats/Playlists";
+import Link from "next/link";
 
 const UserStats = () => {
-  const [activeTab, setActiveTab] = useState(1); 
+  const [activeTab, setActiveTab] = useState(1);
 
   const handleTabClick = (tabId: number) => {
     setActiveTab(tabId);
@@ -75,6 +76,14 @@ const UserStats = () => {
             activeTab === 4 ? "block" : "hidden"
           } transition-all duration-300`}
         >
+          <div className="flex justify-center items-center p-2">
+          <Link
+            href="/create-playlist"
+            className="border rounded-lg py-1 px-4 bg-green-400 border-green-400 transition ease-in-out duration-200 hover:bg-green-500 hover:scale-105 hover:shadow-md disabled:bg-gray-300 disabled:border-gray-300 disabled:hover:scale-100 disabled:opacity-50 disabled:hover:shadow-none"
+          >
+            Create Playlist
+          </Link>
+          </div>
           <Playlists />
         </div>
       </div>
