@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Delete from "../Delete";
 
 type Song = {
   name: string;
@@ -32,6 +33,11 @@ export default function Playlists() {
 
   const handleFilter = () => {
     setWantMyPlaylists(!wantsMyPlaylists);
+  };
+
+  const handleDeletePlaylist = (id: string) => {
+    setUsersPlaylists(usersPlaylists.filter((playlist) => playlist._id !== id));
+    setPlaylists(usersPlaylists.filter((playlist) => playlist._id !== id))
   };
 
   useEffect(() => {
@@ -72,6 +78,7 @@ export default function Playlists() {
             key={playlist._id}
             className="playlist-container border p-4 rounded-lg shadow-md my-4"
           >
+            <Delete id={playlist._id} onDelete={handleDeletePlaylist} /> 
             <h1 className="text-xl font-bold">{playlist.title}</h1>
             <h2 className="text-lg text-gray-600">By {playlist.name}</h2>
             <ul className="list-disc pl-6 mt-2">

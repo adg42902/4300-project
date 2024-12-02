@@ -52,6 +52,8 @@ export default function Signup() {
       }
     } catch (error) {
       setError("Sign Up failed");
+    } finally {
+      setButtonText("Sign up")
       setLoading(false);
     }
   };

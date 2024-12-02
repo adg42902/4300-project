@@ -26,6 +26,12 @@ export async function POST(req: NextRequest) {
       sameSite: 'lax',
       path: '/',
     });
+    response.cookies.set("isLoggedIn", "true", {
+      httpOnly: false,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+    });
 
     return response;
   } catch (error) {

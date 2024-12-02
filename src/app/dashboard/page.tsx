@@ -16,6 +16,8 @@ type Playlist = {
 };
 
 export default function Dashboard() {
+  const isLoggedIn = Cookies.get("isLoggedIn") === "true";
+
   const router = useRouter();
 
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
@@ -35,9 +37,13 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    const connected = Cookies.get("connectedToSpotify") === "true";
-    setIsConnected(connected);
-  }, []);
+    if (!isLoggedIn) {
+      router.push("/");
+    } else {
+      const connected = Cookies.get("connectedToSpotify") === "true";
+      setIsConnected(connected);
+    }
+  }, [isLoggedIn]);
 
   return (
     <div className="relative flex flex-col items-center w-full h-screen mt-4">

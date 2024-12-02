@@ -7,7 +7,6 @@ export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json();
     await connectMongoDB();
-
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newAccount = new Account({
@@ -21,7 +20,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error("Error creating account:", error);
     return NextResponse.json(
-      { message: "Invalid JSON or other error" },
+      { message: "Email already used" },
       { status: 400 }
     );
   }

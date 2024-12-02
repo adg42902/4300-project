@@ -31,3 +31,21 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ message: "Error fetching playlists" }, { status: 500 });
     }
 }
+
+export async function DELETE(req: NextRequest) {
+    await connectMongoDB();
+
+    const { id } = await req.json();
+    if (!id) {
+        return NextResponse.json({ message: "No Playlist Given" }, { status: 400 });
+    }   
+
+    try {
+        const result = await Playlist.findByIdAndDelete({ _id: id });
+
+        return NextResponse.json({ message: "Playlist deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting playlist:", error);
+        return NextResponse.json({ message: "Error deleting playlist" }, { status: 500 });
+    }
+}

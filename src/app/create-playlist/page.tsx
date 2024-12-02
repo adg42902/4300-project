@@ -1,24 +1,24 @@
 "use client";
 
-import React, { use, useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
-
+import Cookies from "js-cookie";
 
 export default function CreatePlaylist() {
+  const isLoggedIn = Cookies.get("isLoggedIn") === "true";
   const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     title: "",
-    songs: []
+    songs: [],
   });
-  
+
   const fetchUserTracks = async () => {
     const response = await fetch("/api/spotifyStats/tracks", {
       method: "GET",
     });
     const tracks = await response.json();
     formData.songs = tracks;
-    console.log(tracks);
   };
 
   const handleChange = (
@@ -31,7 +31,7 @@ export default function CreatePlaylist() {
   };
 
   const handlePlaylistSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     await fetchUserTracks();
     const response = await fetch("/api/playlists", {
@@ -41,10 +41,16 @@ export default function CreatePlaylist() {
     });
 
     if (response.ok) {
-      setFormData({ name : "", title: "", songs: [] });
+      setFormData({ name: "", title: "", songs: [] });
       router.push("/dashboard");
     }
   };
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.push("/")
+    }
+  }, [isLoggedIn])
 
   return (
     <div className="flex min-h-screen items-center justify-center">
@@ -73,7 +79,7 @@ export default function CreatePlaylist() {
           />
         </div>
         <div>
-        <label
+          <label
             htmlFor="title"
             className="block text-sm font-medium text-gray-700 mb-1"
           >
@@ -89,8 +95,7 @@ export default function CreatePlaylist() {
             required
           />
         </div>
-        <div>
-        </div>
+        <div></div>
         <button
           type="submit"
           className="w-full py-2 px-4 bg-green-500 text-black rounded hover:bg-green-600 transition duration-200 my-2"
