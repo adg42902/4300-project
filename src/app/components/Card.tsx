@@ -17,7 +17,7 @@ export default function Card(props: CardProps) {
                 alt="Album cover"
                 width={150}
                 height={150}
-                objectFit="cover"
+                style={{ objectFit: "cover" }}
             />
             <h2 className="mt-2 text-lg font-semibold text-center">{props.title}</h2>
             <h3 className="text-sm text-gray-600 text-center">{props.artist}</h3>
