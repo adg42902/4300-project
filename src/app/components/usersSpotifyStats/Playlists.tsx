@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Delete from "../Delete";
+import Cookies from "js-cookie";
 
 type Song = {
   name: string;
@@ -13,6 +14,8 @@ type Playlist = {
 };
 
 export default function Playlists() {
+  const isLoggedIn = Cookies.get("isLoggedIn") === "true";
+
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [usersPlaylists, setUsersPlaylists] = useState<Playlist[]>([]);
   const [wantsMyPlaylists, setWantMyPlaylists] = useState(false);
@@ -47,7 +50,7 @@ export default function Playlists() {
 
   return (
     <div className="playlists-container p-4">
-      {playlists.length >= 1 && (
+      {playlists.length >= 1 && isLoggedIn && (
         <label>
           <input type="checkbox" onChange={handleFilter} /> Only My Playlists
         </label>
