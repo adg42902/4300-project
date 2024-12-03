@@ -3,7 +3,7 @@ import Account from "@/models/Account";
 import connectMongoDB from "@/libs/db";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest, response: NextResponse) {
   try {
     const { email, password } = await req.json();
     await connectMongoDB();
@@ -13,9 +13,7 @@ export async function POST(req: NextRequest) {
       email,
       password: hashedPassword,
     });
-
     await newAccount.save();
-
     return NextResponse.json({ message: "Account created" });
   } catch (error) {
     console.error("Error creating account:", error);

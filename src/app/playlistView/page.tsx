@@ -2,7 +2,6 @@
 
 import Playlists from "../components/usersSpotifyStats/Playlists";
 import Link from "next/link";
-import Cookies from "js-cookie";
 
 export default function playlistView() {
 

@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import React from "react";
+import Cookies from "js-cookie";
 
 export default function Signup() {
   const router = useRouter();
@@ -44,7 +45,8 @@ export default function Signup() {
       if (response.ok) {
         setButtonText("Sign Up Successful");
         setLoading(false);
-        localStorage.setItem("isLoggedIn", "true");
+        Cookies.set("isLoggedIn", "true");
+        Cookies.set("userEmail", formData.email);
         router.push("/dashboard");
         router.refresh();
       } else {
