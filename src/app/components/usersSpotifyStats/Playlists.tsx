@@ -30,8 +30,8 @@ export default function Playlists() {
     const response = await fetch("/api/playlists/usersPlaylists", {
       method: "GET",
     });
-    const playlists = await response.json();
-    setUsersPlaylists(playlists.playlists);
+    const plays = await response.json();
+    setUsersPlaylists(plays.playlists);
   };
 
   const handleFilter = () => {
@@ -39,8 +39,13 @@ export default function Playlists() {
   };
 
   const handleDeletePlaylist = (id: string) => {
-    setUsersPlaylists(usersPlaylists.filter((playlist) => playlist._id !== id));
-    setPlaylists(usersPlaylists.filter((playlist) => playlist._id !== id))
+    const updatedUsersPlaylists = usersPlaylists.filter((playlist) => playlist._id !== id);
+    setUsersPlaylists(updatedUsersPlaylists);
+    setPlaylists(playlists.filter((playlist) => playlist._id !== id))
+    
+    if (updatedUsersPlaylists.length === 0) {
+      setWantMyPlaylists(false);
+    }
   };
 
   useEffect(() => {
@@ -50,7 +55,7 @@ export default function Playlists() {
 
   return (
     <div className="playlists-container p-4">
-      {playlists.length >= 1 && isLoggedIn && (
+      {usersPlaylists.length >= 1 && isLoggedIn && (
         <label>
           <input type="checkbox" onChange={handleFilter} /> Only My Playlists
         </label>
